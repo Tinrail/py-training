@@ -13,6 +13,9 @@ festivals = [int(festival) for festival in festivals]
 double_income = input("please enter double_income day: ").split()
 double_income = [int(di) for di in double_income]
 
+cl_we = input("please enter cancel weekend double date: ").split()
+cl_we = [int(cw) for cw in cl_we]
+
 if monthRange[0] == 6:
 	week = 0
 else:
@@ -24,7 +27,7 @@ for day in range(1,monthRange[1]+1):
 	mon[day] = week
 	week += 1
 
-def cal_income(dutys):
+def cal_income(dutys,name):
 	sum = 0
 	weekday = 0
 	weekend = 0
@@ -41,17 +44,21 @@ def cal_income(dutys):
 				weekend +=1
 				continue
 		if mon[duty] == 6 or mon[duty] == 0:
-			sum += double_income_value
-			weekend +=1
+			if duty in cl_we:
+				sum += base_income_value
+				weekday +=1
+			else:
+				sum += double_income_value
+				weekend +=1
 		else:
 			sum += base_income_value
 			weekday +=1
 	if festivals:
 		print ("")
-		print ("weekday: "+str(weekday)+"  weekday: "+str(weekend)+"  festivals(300): "+str(spe_day)+"  sum: $"+str(sum))
+		print (name+"  ------>  weekday: "+str(weekday)+"  weekday: "+str(weekend)+"  festivals(300): "+str(spe_day)+"  sum: $"+str(sum))
 	else:
 		print ("")
-		print ("weekday: "+str(weekday)+"  weekday: "+str(weekend)+"  sum: $"+str(sum))		
+		print (name+"  ------>  weekday: "+str(weekday)+"  weekday: "+str(weekend)+"  sum: $"+str(sum))		
 
 while True:
 	user = {}
@@ -63,7 +70,7 @@ while True:
 		break
 	duty_date = [int(d) for d in duty_date]
 	user[name] = duty_date
-	cal_income(user[name])
+	cal_income(user[name],name)
 
 #zhou = input("please enter zhouz's date: ").split()
 #print (zhouz)
