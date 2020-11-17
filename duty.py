@@ -29,7 +29,7 @@ for day in range(1,monthRange[1]+1):
 
 def cal_income(dutys,name):
 	sum = 0
-	weekday = 0
+	weekday = 0 
 	weekend = 0
 	spe_day = 0
 	for duty in dutys:
@@ -55,12 +55,10 @@ def cal_income(dutys,name):
 			weekday +=1
 	if festivals:
 		print ("")
-		print (name+"  ------>  weekday: "+str(weekday)+"  weekday: "+str(weeken
-			d)+"  festivals(300): "+str(spe_day)+"  sum: $"+str(sum))
+		print (name+"  ------>  weekday: "+str(weekday)+"  weekday: "+str(weekend)+"  festivals(300): "+str(spe_day)+"  sum: $"+str(sum))
 	else:
 		print ("")
-		print (name+"  ------>  weekday: "+str(weekday)+"  weekday: "+str(weeken
-			d)+"  sum: $"+str(sum))		
+		print (name+"  ------>  weekday: "+str(weekday)+"  weekday: "+str(weekend)+"  sum: $"+str(sum))
 
 while True:
 	user = {}
