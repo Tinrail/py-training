@@ -4,7 +4,7 @@
 # * Email : 18306730@qq.com
 # * Create time : 2020-11-17 08:54
 # * Filename : ssh_key_distrubute.sh
-# * Description : 
+# * Description :
 # **********************************************************
 input () {
 read  -p "pls input one ip address :" ip
@@ -12,7 +12,7 @@ read  -p "pls input one ip address :" ip
 if [ -z $ip ]
 then
 	echo "ip address is null!"
-	exit 1	
+	exit 1
 fi
 
 read  -p "pls input port number (defult 22 enter) :" port
@@ -22,7 +22,7 @@ port=${port:="22"}
 read  -p "pls input ssh public key (defult /root/.ssh/id_rsa.pub enter):" file
 
 file=${file:="/root/.ssh/id_rsa.pub"}
- 
+
 if [ ! -f $file ]
 then
 	echo "ssh public key file not exist!"
@@ -46,16 +46,13 @@ input
 
 if [ -f /usr/bin/ssh-copy-id -a -x /usr/bin/ssh-copy-id ]
 then
-	
-	/usr/bin/ssh-copy-id -p ${port} -i /root/.ssh/id_rsa.pub root@${ip}  > /dev/null
-
+		/usr/bin/ssh-copy-id -p ${port} -i ${file} root@${ip}  > /dev/null
+	result=$(echo $?)
 else
 	echo
 	echo -e "\033[31m ssh-copy-id command is not exites ! \033[0m"
 	exit
 fi
-	
-result=$(ssh -p ${port} root@${ip} "echo $?")
 
 if [ "$result" -eq 0 ]
 then
@@ -63,22 +60,22 @@ then
 	echo
 	echo -e "\033[32m :) succeed,good job! \033[0m"
 	echo
-	
+
 else
 	echo
 	echo -e "\033[31m :( failure! \033[0m"
 	echo
-	exit 1        
+	exit 1
 fi
 
 read -p "Do you want to continue ?" cont
 
 if [ "$cont" ==  "y" -o "$cont" == "Y" ]
-then 
+then
 	continue
 else
 	echo -e "\033[32m bye ! \033[0m"
 	exit 0
 fi
 
-done       
+done
