@@ -19,9 +19,18 @@ read  -p "pls input port number (defult 22 enter) :" port
 
 port=${port:="22"}
 
-read  -p "pls input ssh public key (defult /root/.ssh/id_rsa.pub enter):" file
+user=$(whoami)
 
-file=${file:="/root/.ssh/id_rsa.pub"}
+if [ "$user" == root ]
+then
+	defult_file="/root/.ssh/id_rsa.pub"
+else
+	defult_file="/home/${user}/.ssh/id_rsa.pub"
+fi
+
+read  -p "pls input ssh public key (defult ${defult_file} enter):" file
+
+file=${file:=$defult_file}
 
 if [ ! -f $file ]
 then
