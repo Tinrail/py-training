@@ -29,7 +29,7 @@ then
 		exit 1
 	fi 	
 fi
-exit 0
+
 port=${port:="22"}
 
 user=$(whoami)
