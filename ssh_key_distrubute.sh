@@ -17,6 +17,19 @@ fi
 
 read  -p "pls input port number (defult 22 enter) :" port
 
+if [ -n "$port" ]
+then
+	expr $port + 1 &> /dev/null
+	t=$(echo $?)
+	if [ "$t" -ne 0 ]
+	then
+		echo 
+		echo -e "\033[31m Error! port number is not integer \033[0m"
+		echo
+		exit 1
+	fi 	
+fi
+exit 0
 port=${port:="22"}
 
 user=$(whoami)
@@ -34,7 +47,7 @@ file=${file:=$defult_file}
 
 if [ ! -f $file ]
 then
-	echo "ssh public key file not exist!"
+	echo -e "\033[31m Error! ssh public key file not exist \033[0m"
 	exit 1
 fi
 
@@ -59,7 +72,7 @@ then
 	result=$(echo $?)
 else
 	echo
-	echo -e "\033[31m ssh-copy-id command is not exites ! \033[0m"
+	echo -e "\033[31m Error! ssh-copy-id command is not exites  \033[0m"
 	exit
 fi
 
@@ -77,7 +90,7 @@ else
 	exit 1
 fi
 
-read -p "Do you want to continue ?" cont
+read -p "Do you want to continue ? [y|Y]" cont
 
 if [ "$cont" ==  "y" -o "$cont" == "Y" ]
 then
