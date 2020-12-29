@@ -34,7 +34,7 @@ port=${port:="22"}
 
 user=$(whoami)
 
-if [ "$user" == root ]
+if [ "$UID" == 0 ]
 then
 	defult_file="/root/.ssh/id_rsa.pub"
 else
