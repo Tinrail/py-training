@@ -1,5 +1,5 @@
 import calendar
-year = 2020
+year = 2021
 base_income_value = 80   #普通日值班费
 double_income_value = base_income_value * 2 #周末值班费
 festival_income_value = 300  #节日值班费
