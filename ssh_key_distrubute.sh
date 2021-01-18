@@ -90,7 +90,7 @@ else
 	exit 1
 fi
 
-read -p "Do you want to continue ? [y|Y]" cont
+read -p "Do you want to continue ? [y|n]" cont
 
 if [ "$cont" ==  "y" -o "$cont" == "Y" ]
 then
