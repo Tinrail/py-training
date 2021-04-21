@@ -1,7 +1,7 @@
-#!/usr/bin/expect
+#!/usr/local/bin/expect
 set timeout 50
 set port "22"
-set file "/root/.ssh/id_rsa.pub"
+set file "/Users/teiei/.ssh/id_rsa.pub"
 set host [lindex $argv 0]
 set password [lindex $argv 1]
 spawn /usr/bin/ssh-copy-id -p ${port} -i ${file} root@${host}

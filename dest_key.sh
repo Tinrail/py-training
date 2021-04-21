@@ -7,37 +7,34 @@
 # * Description :
 # **********************************************************
 
-file="/root/.ssh/id_rsa.pub"
+#file="/Users/teiei/.ssh/id_rsa.pub"
 
-if [ $(rpm -qa expect |wc -l) == "0" ];then 
+if [ $(whereis expect |wc -l) == "0" ];then 
      echo "\033[31m you need install Expect tools. \033[0m"
      exit
 fi
 
+read  -p "please input  file  name with remote host name and password  :" file
+
 if [ ! -f $file ]
 then
-        echo -e "\033[31m Error! ssh public key file not exist. \033[0m"
+        echo -e "\033[31m Error! file ${file} not exist. \033[0m"
         exit 1
 fi
-
-
-
-read  -p "pls input servers file :" file
 
 IFS=$'\n'
 
 for server in $(cat "$file")
 do
 	
-        
-        host=$(echo $server | awk '{print $1}')
+    host=$(echo $server | awk '{print $1}')
 	passwd=$(echo $server | awk '{print $2}')
-        /usr/bin/expect ssh-copy-id.exp $host $passwd 
-        if [ $? == '0' ];then
+    echo $passwd
+    /usr/local/bin/expect ssh-copy-id.exp $host $passwd 
+    if [ $? == '0' ];then
 	   echo "mission ssh-copy-id for host ${host} complete"
-        else
-           echo "mission ssh-copy-id for host ${host} failed"
-        fi
+    else
+       echo "mission ssh-copy-id for host ${host} failed"
+    fi
         
-	
 done
