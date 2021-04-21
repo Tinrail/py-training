@@ -1,13 +1,20 @@
 #!/bin/bash
 
-read  -p "pls input servers file :" file
+read  -p "please input file name with remote host name :" host
 
-if [ ! -f $file ]
+if [ ! -f $host ]
+then
+	echo "The ${host} is not exist!"
+fi
+
+read  -p "pls input want transter to remote host file :" file
+
+if [ ! -f $host ]
 then
 	echo "The ${file} is not exist!"
 fi
 
-for server in $(cat "$file")
+for server in $(cat "$host")
 do
      host=$(echo $server | awk '{print $1}')
      /usr/bin/rsync  "${file}" root@$host:/root/
