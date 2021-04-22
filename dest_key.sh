@@ -29,8 +29,7 @@ do
 	
     host=$(echo $server | awk '{print $1}')
 	passwd=$(echo $server | awk '{print $2}')
-    echo $passwd
-    /usr/local/bin/expect ssh-copy-id.exp $host $passwd 
+    /usr/local/bin/expect ssh-copy-id.exp $host $passwd > /dev/null 
     if [ $? == '0' ];then
 	   echo "mission ssh-copy-id for host ${host} complete"
     else
