@@ -14,6 +14,8 @@ then
 	echo "The ${file} is not exist!"
 fi
 
+IFS=$'\n'
+
 for server in $(cat "$host")
 do
      host=$(echo $server | awk '{print $1}')
