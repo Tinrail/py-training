@@ -7,7 +7,7 @@ function key(){
      	 exit
 	fi
 
-	read  -p "please input  file  name with remote host name and password  :" hosts
+	read  -p "$(echo -e "\033[1;34mplease input  file  name with remote host name and password :\033[0m")" hosts
 
 	if [ ! -f $hosts ]
 	then
@@ -41,7 +41,7 @@ function key(){
 
 function tran(){
 	
-	read  -p "please input file name with remote host name :" host
+	read  -p "$(echo -e "\033[1;34mplease input file name with remote host name :\033[0m")" host
 
 	if [ ! -f $host ]
 	then
@@ -55,7 +55,7 @@ function tran(){
         exit
     fi
 
-	read  -p "please input want transter to remote host file :" file
+	read  -p "$(echo -e "\033[1;34mplease input want transter to remote host file :\033[0m")" file
 
 	if [ ! -f $file ]
 	then
@@ -81,7 +81,7 @@ function tran(){
 
 function exe(){
 	
-	read  -p "please input file name with remote host name :" host
+	read  -p "$(echo -e "\033[1;34mplease input file name with remote host name :\033[0m")" host
 
 	if [ ! -f $host ]
 	then
@@ -95,7 +95,7 @@ function exe(){
         exit
     fi
 
-	read  -p "please input file that execute command to remote host :" file
+	read  -p "$(echo -e "\033[1;34mplease input file that execute command to remote host :\033[0m")" file
 
 	if [ ! -f $file ]
 	then
@@ -140,7 +140,7 @@ echo -e '\033[32m
 
 function chose(){
 
-	read  -p "Please enter your chose [ 1 - 4 ] :" command
+	read  -p "$(echo -e "\033[1;34mPlease enter your chose [ 1 - 4 ] :\033[0m")" command
 
 	case "$command" in
 		1)
