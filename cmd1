@@ -1,0 +1,5 @@
+iptables -A INPUT -j DROP
+iptables-save > /etc/sysconfig/iptables
+exit
+
+

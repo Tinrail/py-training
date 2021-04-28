@@ -109,7 +109,7 @@ function exe(){
 	do
 	     host=$(echo $server | awk '{print $1}')
 
-	     ssh -t -t root@$host < $file > /dev/null 
+	     ssh -t -t -o LogLevel=QUIET root@$host < $file > /dev/null
          
 	     if [ $? == "0" ]
 	     then
@@ -123,7 +123,7 @@ function exe(){
 
 function menu(){
 
-clear
+#clear
 
 echo -e '\033[32m
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
