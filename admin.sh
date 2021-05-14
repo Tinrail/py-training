@@ -51,7 +51,7 @@ function tran(){
 
 	if [ $(cat $host |wc -l) == "0" ]
 	then
-		echo -e "\033[31m Error! ${host} in empty. \033[0m"
+		echo -e "\033[31m Error! ${host} is empty. \033[0m"
         exit
     fi
 
@@ -91,7 +91,7 @@ function exe(){
 
 	if [ $(cat $host |wc -l) == "0" ]
 	then
-		echo -e "\033[31m Error! ${host} in empty. \033[0m"
+		echo -e "\033[31m Error! ${host} is empty. \033[0m"
         exit
     fi
 
@@ -121,26 +121,80 @@ function exe(){
 	done
 }
 
+function del(){
+
+	read  -p "$(echo -e "\033[1;34mplease input file name with remote host name :\033[0m")" host
+
+	if [ ! -f $host ]
+	then
+		echo "The ${host} is not exist!"
+	    exit
+	fi
+
+	if [ $(cat $host |wc -l) == "0" ]
+	then
+		echo -e "\033[31m Error! host is empty. \033[0m"
+        exit
+    fi
+
+    read  -p "$(echo -e "\033[1;34mplease input keyword that you want search iptables:\033[0m")" key
+
+    if [[ -z $key ]]
+    then
+    	echo -e "\033[31m Error! keyword is empty. \033[0m"
+    	exit
+    fi
+
+    for server in $(cat "$host")
+	do
+		row=$(ssh root@$server iptables -nL | grep -n "$key" |wc -l|sed 's/^[ ]*//g')
+
+		if [[ $row = "1" ]]
+		then
+			row_number=$(ssh root@$server iptables -nL | grep -n $key |cut -d: -f1)
+			row_number=$(($row_number-2))
+			ssh root@$server iptables -D INPUT $row_number
+			ssh root@$server "iptables-save > /etc/sysconfig/iptables"
+			
+			if [[ $? = "0" ]]
+			then
+				echo "delete keyword ${key} row in ${server} is succeed!"
+		    fi
+
+		elif [[ $row > 1 ]]
+		then
+			echo -e "\033[31mresult of search ${key} in ${server} is multiple.\033[0m"
+            echo "$(ssh root@$server iptables -nL | grep $key)"
+            
+		elif [[ -n $row ]]
+		then
+			 echo -e "result of search ${key} in ${server} is none."
+		fi
+	
+	done
+}
+
 function menu(){
 
 #clear
 
-echo -e '\033[32m
+echo -e "\033[32m
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                 M A I N - M E N U
 ====================================================
 	1.Install public key to remote servers
 	2.Send file to remote servers
 	3.Execute commands in remote servers
-	4.Exit
+	4.delete iptables' a item with you give
+	5.Exit
 ====================================================
 
-\033[0m '
+\033[0m "
 }
 
 function chose(){
 
-	read  -p "$(echo -e "\033[1;34mPlease enter your chose [ 1 - 4 ] :\033[0m")" command
+	read  -p "$(echo -e "\033[1;34mPlease enter your chose [ 1 - 5 ] :\033[0m")" command
 
 	case "$command" in
 		1)
@@ -153,12 +207,15 @@ function chose(){
 			exe
 			;;
 		4)
+			del
+			;;
+		5)
 			echo "bye!"
 			exit
 			;;
 		*)  
             echo ""
-	        echo -e "\033[31m ERROR! must is {1|2|3|4} \033[0m"
+	        echo -e "\033[31m ERROR! must is {1|2|3|4|5} \033[0m"
 	        echo ""
 	esac
 }

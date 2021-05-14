@@ -1,0 +1,3 @@
+iptables -I INPUT -s 10.0.34.1 -p tcp --dport 22 -j ACCEPT
+iptables-save > /etc/sysconfig/iptables
+exit
