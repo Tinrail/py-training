@@ -107,13 +107,11 @@ function exe(){
 
 	for server in $(cat "$host")
 	do
-	     host=$(echo $server | awk '{print $1}')
-
-	     ssh -t -t -o LogLevel=QUIET root@$host < $file > /dev/null
+	     ssh -t -t -o LogLevel=QUIET root@$sever < $file > /dev/null
          
 	     if [ $? == "0" ]
 	     then
-	     	echo "send command  to ${host} completed."
+	     	echo "send command  to ${sever} completed."
 	     else
 	     	echo -e "\033[31m send command  to ${host} field. \033[0m"
 
@@ -147,6 +145,12 @@ function del(){
 
     for server in $(cat "$host")
 	do
+		/usr/bin/ping -c 1 -w 1 ${server} > /dev/null
+		if [[ $? != "0" ]]
+		then
+			echo "The ${server} is connect fild."
+			continue
+		fi
 		row=$(ssh root@$server iptables -nL | grep -n "$key" |wc -l|sed 's/^[ ]*//g')
 
 		if [[ $row = "1" ]]
