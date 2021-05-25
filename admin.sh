@@ -145,7 +145,7 @@ function del(){
 
     for server in $(cat "$host")
 	do
-		/usr/bin/ping -c 1 -w 1 ${server} > /dev/null
+		/sbin/ping -c 1 -w 1 ${server} > /dev/null
 		if [[ $? != "0" ]]
 		then
 			echo "The ${server} is connect fild."
